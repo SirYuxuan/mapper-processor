@@ -1,0 +1,13 @@
+package #package;
+
+import #package.#className;
+import com.yuxuan66.support.basic.jpa.BasicDao;
+
+/**
+ * Basic-Admin Automatic Generation
+ * @author  Sir丶雨轩
+ * @since #date
+ */
+public interface #classNameDao extends BasicDao<#className> {
+
+}
