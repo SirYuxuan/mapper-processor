@@ -3,14 +3,7 @@ package com.yuxuan66.processor;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import com.google.auto.service.AutoService;
-import com.google.common.primitives.Chars;
-import com.yuxuan66.annotation.Dao;
-import org.beetl.core.Configuration;
-import org.beetl.core.GroupTemplate;
-import org.beetl.core.Template;
-import org.beetl.core.resource.ClasspathResourceLoader;
-import org.beetl.core.resource.StringTemplateResourceLoader;
-import sun.nio.ch.IOUtil;
+import com.yuxuan66.annotation.Mapper;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -47,7 +40,7 @@ public class DaoProcessor extends AbstractProcessor {
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> annotations = new LinkedHashSet<>();
         //把我们自己定义的注解添加进去
-        annotations.add(Dao.class.getCanonicalName());
+        annotations.add(Mapper.class.getCanonicalName());
         return annotations;
     }
 
@@ -71,9 +64,9 @@ public class DaoProcessor extends AbstractProcessor {
     }
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(Dao.class)) {
+        for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(Mapper.class)) {
             if (annotatedElement.getKind() != ElementKind.CLASS) {
-                error(annotatedElement, "Only classes can be annotated with @%s", Dao.class.getSimpleName());
+                error(annotatedElement, "Only classes can be annotated with @%s", Mapper.class.getSimpleName());
                 return true;
             }
             // //解析，并生成代码
@@ -89,7 +82,7 @@ public class DaoProcessor extends AbstractProcessor {
 
     private void analysisAnnotated(Element classElement) throws IOException {
 
-        Dao annotation = classElement.getAnnotation(Dao.class);
+        Mapper annotation = classElement.getAnnotation(Mapper.class);
 
         InputStream inputStream = this.getClass().getResourceAsStream("/template/Dao.btl");
 
@@ -103,7 +96,7 @@ public class DaoProcessor extends AbstractProcessor {
         daoContent = daoContent.replaceAll("#className",classElement.getSimpleName().toString());
 
         try {
-            JavaFileObject source = mFiler.createSourceFile(packageName + "." + classElement.getSimpleName() + "Dao");
+            JavaFileObject source = mFiler.createSourceFile(packageName + "." + classElement.getSimpleName() + "Mapper");
             Writer writer = source.openWriter();
             writer.write(daoContent);
             writer.flush();

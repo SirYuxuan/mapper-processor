@@ -1,13 +1,15 @@
 package #package;
 
 import #package.#className;
-import com.yuxuan66.support.basic.jpa.BasicDao;
+import com.yuxuan66.support.basic.BasicMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * Basic-Admin Automatic Generation
  * @author  Sir丶雨轩
  * @since #date
  */
-public interface #classNameDao extends BasicDao<#className> {
+@Mapper
+public interface #classNameMapper extends BasicMapper<#className> {
 
 }
