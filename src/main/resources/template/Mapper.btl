@@ -1,0 +1,14 @@
+package #package;
+
+import org.apache.ibatis.annotations.Mapper;
+#autoImport
+
+/**
+ * Mapper-Processor Automatic Generation
+ * @author  Automatic Generation
+ * @since #date
+ */
+@Mapper
+public interface #classNameMapper extends #baseMapper<#className> {
+
+}
